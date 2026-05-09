@@ -53,8 +53,8 @@
         <div class="pdf-buttons">
 
             <!-- VIEW -->
-            <a href="https://docs.google.com/viewer?url=https://{{ file.file.url|cut:'https://' }}&embedded=true"
-                target="_blank"
+            <a  href="{% url 'view_file' file.id %}"
+                
                 class="view-btn">
 
                 👁 View PDF
