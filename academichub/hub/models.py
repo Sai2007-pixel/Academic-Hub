@@ -1,5 +1,5 @@
 from django.db import models
-
+from cloudinary.models import CloudinaryField
 
 class Branch(models.Model):
     name = models.CharField(max_length=100)
@@ -30,21 +30,19 @@ class FileCategory(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 class File(models.Model):
+
     title = models.CharField(max_length=200)
+
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
     category = models.ForeignKey(FileCategory, on_delete=models.CASCADE)
-    file = models.FileField(upload_to='files/')
+
+    file = CloudinaryField(resource_type='raw')
+
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
-    
-
-
-    # class File(models.Model):
-    # title = models.CharField(max_length=200)
-    # subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='files')
-    # category = models.ForeignKey(FileCategory, on_delete=models.CASCADE, related_name='files')
