@@ -6,17 +6,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-    # ADMIN
     path('admin/', admin.site.urls),
 
-    # HUB APP URLS
     path('', include('hub.urls')),
 
 ]
 
-# MEDIA FILES
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
