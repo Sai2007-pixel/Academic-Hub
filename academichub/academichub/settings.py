@@ -1,4 +1,4 @@
-
+import cloudinary
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'cloudinary_storage',
+    'cloudinary',
 
     'hub',   # your app
 ]
@@ -112,11 +115,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_DIRS = [BASE_DIR / 'staticfiles']   # 👈 optional but useful
 
 
-# ✅ MEDIA FILES (PDFs)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-
 # ✅ DEFAULT FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -163,3 +161,12 @@ JAZZMIN_SETTINGS = {
     },
 
 }
+
+
+cloudinary.config(
+    cloud_name='dxqv9zh4t',
+    api_key='441433973451126',
+    api_secret='g1oFPA-lVJPwlA3Nl_tVaFSgGXo'
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
