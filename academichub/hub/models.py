@@ -40,7 +40,7 @@ class File(models.Model):
 
     category = models.ForeignKey(FileCategory, on_delete=models.CASCADE)
 
-    file = CloudinaryField(resource_type='raw')
+    file = CloudinaryField(resource_type='image')
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
