@@ -644,11 +644,10 @@
 
                 <!-- VIEW PDF -->
 
-                <a href="{{ file.file.url }}"
-                    target="_blank"
+                <a href="{% url 'view_file' file.id %}"
                     class="view-btn">
 
-                    👁 View PDF
+                     👁 View PDF
 
                 </a>
 
