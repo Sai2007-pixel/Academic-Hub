@@ -1,0 +1,689 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+
+.files-container{
+    width:90%;
+    max-width:1400px;
+    margin:40px auto 80px;
+}
+
+/* =========================
+   TOP NAVIGATION
+========================= */
+
+.top-nav{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+}
+
+.nav-link{
+    text-decoration:none;
+    color:#64748b;
+    font-size:15px;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.nav-link:hover{
+    color:#14b8a6;
+    transform:translateY(-2px);
+}
+
+.nav-divider{
+    color:#94a3b8;
+    font-size:16px;
+}
+
+.current-page{
+    color:#0f172a;
+    font-weight:800;
+    font-size:14px;
+    background:#ecfeff;
+    padding:10px 18px;
+    border-radius:14px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.files-title{
+    font-size:62px;
+    font-weight:900;
+    color:#0f172a;
+    margin-bottom:18px;
+    line-height:1.1;
+    letter-spacing:-2px;
+}
+
+.files-subtitle{
+    max-width:880px;
+    color:#64748b;
+    line-height:1.9;
+    font-size:18px;
+    margin-bottom:45px;
+}
+
+/* =========================
+   FILE CARD
+========================= */
+
+.file-card{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:34px;
+
+    margin-bottom:28px;
+
+    border:1px solid #e2e8f0;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:0.4s ease;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:30px;
+
+    box-shadow:
+    0 10px 35px rgba(15,23,42,0.05);
+}
+
+/* TOP BORDER */
+
+.file-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #14b8a6,
+        #2563eb
+    );
+}
+
+/* GLOW */
+
+.file-card::after{
+
+    content:'';
+
+    position:absolute;
+
+    width:240px;
+    height:240px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(20,184,166,0.10),
+        transparent 70%
+    );
+
+    top:-100px;
+    right:-100px;
+
+    transition:0.4s;
+}
+
+.file-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 22px 55px rgba(37,99,235,0.12);
+
+    border-color:#14b8a6;
+}
+
+.file-card:hover::after{
+    transform:scale(1.08);
+}
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.file-left{
+    display:flex;
+    gap:24px;
+    align-items:flex-start;
+    flex:1;
+}
+
+/* FILE ICON */
+
+.file-icon{
+
+    width:88px;
+    height:88px;
+
+    border-radius:24px;
+
+    background:#ecfeff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:38px;
+
+    transition:0.35s;
+}
+
+.file-card:hover .file-icon{
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    transform:
+    scale(1.08)
+    rotate(-5deg);
+}
+
+/* =========================
+   FILE CONTENT
+========================= */
+
+.file-content h2{
+
+    font-size:32px;
+
+    font-weight:900;
+
+    color:#0f172a;
+
+    margin-bottom:16px;
+}
+
+.file-content p{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+    max-width:700px;
+
+    margin-bottom:22px;
+}
+
+/* TAGS */
+
+.tags{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.tags span{
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    color:#475569;
+
+    font-weight:700;
+
+    font-size:13px;
+
+    transition:0.3s;
+}
+
+.tags span:hover{
+    background:#ecfeff;
+    border-color:#14b8a6;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.file-actions{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+}
+
+/* BUTTON BASE */
+
+.view-btn,
+.download-btn{
+
+    padding:16px 26px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-weight:800;
+
+    font-size:15px;
+
+    transition:0.35s ease;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-width:170px;
+
+    position:relative;
+
+    z-index:999;
+}
+
+/* VIEW BUTTON */
+
+.view-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    box-shadow:
+    0 12px 24px rgba(15,23,42,0.14);
+}
+
+/* DOWNLOAD BUTTON */
+
+.download-btn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    box-shadow:
+    0 12px 24px rgba(20,184,166,0.18);
+}
+
+/* BUTTON HOVER */
+
+.view-btn:hover,
+.download-btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.03);
+
+    opacity:0.95;
+}
+
+/* =========================
+   EMPTY BOX
+========================= */
+
+.empty-box{
+
+    background:white;
+
+    padding:80px 40px;
+
+    border-radius:32px;
+
+    text-align:center;
+
+    border:1px solid #e2e8f0;
+}
+
+.empty-box h2{
+
+    font-size:42px;
+
+    margin-bottom:18px;
+
+    color:#0f172a;
+}
+
+.empty-box p{
+
+    color:#64748b;
+
+    font-size:17px;
+
+    line-height:1.8;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .file-card{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .file-actions{
+        width:100%;
+    }
+
+    .view-btn,
+    .download-btn{
+        width:100%;
+    }
+
+    .files-title{
+        font-size:44px;
+    }
+
+    .files-subtitle{
+        font-size:16px;
+    }
+
+}
+
+
+/* =========================
+   PDF MODAL
+========================= */
+
+.pdf-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(15,23,42,0.82);
+
+    backdrop-filter:blur(8px);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:99999;
+
+    padding:30px;
+}
+
+/* SHOW */
+
+.pdf-modal.show{
+
+    display:flex;
+}
+
+/* CONTENT */
+
+.pdf-modal-content{
+
+    position:relative;
+
+    width:96%;
+    max-width:1350px;
+
+    height:92vh;
+
+    background:white;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    animation:modalOpen 0.35s ease;
+
+    box-shadow:
+    0 30px 90px rgba(0,0,0,0.28);
+}
+
+/* PDF */
+
+.pdf-modal iframe{
+
+    width:100%;
+    height:100%;
+}
+
+/* CLOSE */
+
+.close-modal{
+
+    position:absolute;
+
+    top:18px;
+    right:24px;
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    background:#0f172a;
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    z-index:999;
+
+    transition:0.35s ease;
+}
+
+.close-modal:hover{
+
+    background:#14b8a6;
+
+    transform:
+    rotate(90deg)
+    scale(1.08);
+}
+
+/* ANIMATION */
+
+@keyframes modalOpen{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(0.92)
+        translateY(30px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1)
+        translateY(0px);
+    }
+}
+
+</style>
+
+<div class="files-container">
+
+    <!-- TOP NAVIGATION -->
+
+    <div class="top-nav">
+
+        <a href="{% url 'home' %}" class="nav-link">
+            🏠 Home
+        </a>
+
+        <span class="nav-divider">›</span>
+
+        <a href="javascript:history.back()" class="nav-link">
+            ← Back
+        </a>
+
+        <span class="nav-divider">›</span>
+
+        <span class="current-page">
+            {{ category.name }}
+        </span>
+
+    </div>
+
+    <!-- PAGE HEADER -->
+
+    <h1 class="files-title">
+
+        {{ category.name }} Learning Portal
+
+    </h1>
+
+    <p class="files-subtitle">
+
+        Access premium academic resources including lecture notes,
+        semester PDFs, educational references and structured
+        learning materials.
+
+    </p>
+
+    <!-- FILES -->
+
+    {% if files %}
+
+        {% for file in files %}
+
+        <div class="file-card">
+
+            <!-- LEFT SIDE -->
+
+            <div class="file-left">
+
+                <div class="file-icon">
+                    📄
+                </div>
+
+                <div class="file-content">
+
+                    <h2>
+                        {{ file.title }}
+                    </h2>
+
+                    <p>
+
+                        Organized academic study material with semester
+                        resources, structured educational content and
+                        professional learning support.
+
+                    </p>
+
+                    <div class="tags">
+
+                        <span>📘 Academic PDF</span>
+                        <span>🎓 Student Resource</span>
+                        <span>⚡ Updated Material</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div class="file-actions">
+
+                <!-- VIEW PDF -->
+
+                <a href="{{ file.file.url }}"
+                    target="_blank"
+                    class="view-btn">
+
+                    👁 View PDF
+
+                </a>
+
+                <!-- DOWNLOAD PDF -->
+
+                <a href="{{ file.file.url }}"
+                   download
+                   class="download-btn">
+
+                   ⬇ Download
+
+                </a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-box">
+
+            <h2>
+                No Resources Available
+            </h2>
+
+            <p>
+
+                No files were uploaded for this category yet.
+
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

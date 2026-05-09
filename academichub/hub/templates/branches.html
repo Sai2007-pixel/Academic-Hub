@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Select Branch</h1>
+
+<div class="grid">
+
+{% for branch in branches %}
+
+<div class="card">
+
+    <h3>🏫 {{ branch.name }}</h3>
+
+    <a href="/semesters/{{ branch.id }}/" class="btn">
+        View Semesters →
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No branches available.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

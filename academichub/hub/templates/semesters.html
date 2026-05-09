@@ -1,0 +1,1134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="semester-page">
+
+    <!-- TOP HEADER -->
+
+    <div class="semester-header">
+
+        <div class="breadcrumb">
+
+            <a href="/" class="bread-link">
+                🏠 Home
+            </a>
+
+            <span>›</span>
+
+            <a href="/#courses" class="bread-link">
+                Courses
+            </a>
+
+            <span>›</span>
+
+            <span class="bread-active">
+                {{ branch.name }}
+            </span>
+
+        </div>
+
+        <h1 class="semester-title">
+            {{ branch.name }}
+        </h1>
+
+        <p class="semester-subtitle">
+            Explore semester-wise academic resources including notes,
+            assignments, PPTs, previous papers and laboratory materials.
+        </p>
+
+    </div>
+
+    <!-- SEARCH BAR -->
+
+    <div class="search-wrapper">
+
+        <div class="search-box">
+
+            <span class="search-icon">
+            🔍
+            </span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search semesters, resources, subjects..."
+            >
+
+        </div>
+
+    </div>
+
+    <!-- SEMESTER GRID -->
+    <div class="semester-grid">
+
+        {% for sem in semesters %}
+
+        <div class="semester-card {% if sem.id in active_sem_ids %}active-sem{% else %}locked-sem{% endif %}">
+
+            <!-- CARD GLOW -->
+            <div class="card-glow"></div>
+
+            <!-- TOP -->
+            <div class="semester-top">
+
+                <div class="semester-number">
+                    {{ sem.name }}
+                </div>
+
+                {% if sem.id in active_sem_ids %}
+
+                <div class="status-badge active-badge">
+                    ● Active
+                </div>
+
+                {% else %}
+
+                <div class="status-badge lock-badge">
+                    🔒 Coming Soon
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- TITLE -->
+
+            <h2 class="semester-heading">
+                Semester {{ sem.name }}
+            </h2>
+
+            <p class="semester-desc">
+
+                {% if sem.id in active_sem_ids %}
+
+                Access organized subject resources, study materials,
+                important PDFs and semester academic content.
+
+                {% else %}
+
+                Semester resources are currently under preparation
+                and will be available soon.
+
+                {% endif %}
+
+            </p>
+
+            <!-- BOTTOM -->
+
+            <div class="semester-bottom">
+
+                <div class="semester-mini">
+                    📅 Academic Semester {{ sem.name }}
+                </div>
+
+                {% if sem.id in active_sem_ids %}
+
+                <a href="/subjects/{{ sem.id }}/{{ branch.id }}/"
+                   class="semester-btn">
+
+                    View Subjects →
+
+                </a>
+
+                {% else %}
+
+                <div class="soon-text">
+                    Resources Updating...
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- EXTRA INFO SECTION -->
+
+<section class="academic-info-section">
+
+    <div class="academic-info-grid">
+
+        <!-- LEFT -->
+
+        <div class="academic-info-card">
+
+            <div class="info-icon">
+                🎓
+            </div>
+
+            <h2>
+                Semester Learning Portal
+            </h2>
+
+            <p>
+                Explore an advanced academic learning environment built for students,
+                where semester materials, subject resources, practical manuals,
+                assignments and high-quality study content are structured into a
+                seamless and accessible educational portal.
+            </p>
+
+            <div class="info-tags">
+
+                <span>Structured Learning</span>
+                <span>Semester Resources</span>
+                <span>Academic Materials</span>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="mini-stats-wrap">
+
+            <div class="mini-stat-card">
+
+                <h3>
+                    {{ total_semesters }}
+                </h3>
+
+                <p>
+                    Total Semesters
+                </p>
+
+            </div>
+
+            <div class="mini-stat-card">
+
+                <h3>
+                    {{ active_sem_ids|length }}
+                </h3>
+
+                <p>
+                    Active Semesters
+                </p>
+
+            </div>
+
+            <div class="mini-stat-card">
+
+                <h3>
+                    {{ branch.name }}
+                </h3>
+
+                <p>
+                    Academic Department
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+<!-- =========================================
+     PREMIUM FOOTER
+========================================= -->
+
+<section class="semester-footer">
+
+    <div class="footer-grid">
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+                🎓
+            </div>
+
+            <div>
+
+                <h2>Academic Hub</h2>
+
+                <p>
+                    Your centralized academic platform designed for
+                    semester-wise study resources, educational PDFs,
+                    assignments, laboratory manuals and structured
+                    learning materials.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+            <h3>Quick Access</h3>
+
+            <a href="/">🏠 Home</a>
+
+            <a href="/#courses">📚 Courses</a>
+
+            <a href="/admin/">🔐 Admin Login</a>
+
+        </div>
+
+        <!-- SUPPORT -->
+
+        <div class="footer-support">
+
+            <h3>Academic Support</h3>
+
+            <p>📘 Semester Materials</p>
+
+            <p>📝 Assignments & Notes</p>
+
+            <p>🧪 Laboratory Resources</p>
+
+            <p>📊 PPT & Presentation Files</p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+<style>
+
+/* =========================
+   PAGE
+========================= */
+
+.semester-page{
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+    padding-top:45px;
+    padding-bottom:80px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.semester-header{
+    margin-bottom:45px;
+}
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+
+    margin-bottom:28px;
+}
+
+.breadcrumb a{
+    text-decoration:none;
+    color:#64748b;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.breadcrumb a:hover{
+    color:#14b8a6;
+}
+
+.breadcrumb span{
+    color:#94a3b8;
+}
+
+.semester-title{
+    font-size:56px;
+    font-weight:900;
+    color:#0f172a;
+    margin-bottom:16px;
+    letter-spacing:-1.5px;
+    line-height:1.1;
+}
+
+.semester-subtitle{
+    max-width:760px;
+    color:#64748b;
+    line-height:1.8;
+    font-size:18px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.semester-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:28px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.semester-card{
+
+    position:relative;
+
+    background:white;
+
+    border-radius:26px;
+
+    padding:30px;
+
+    overflow:hidden;
+
+    border:1px solid #e2e8f0;
+
+    transition:0.4s ease;
+
+    min-height:290px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,0.05);
+}
+
+/* PREMIUM LIGHT */
+
+.semester-card::after{
+    content:'';
+
+    position:absolute;
+
+    top:-120px;
+    right:-120px;
+
+    width:220px;
+    height:220px;
+
+    background:
+    radial-gradient(
+        rgba(59,130,246,0.10),
+        transparent 70%
+    );
+
+    transition:0.4s ease;
+}
+
+.semester-card:hover::after{
+    transform:scale(1.2);
+}
+
+/* GLOW */
+
+.card-glow{
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    background:
+    radial-gradient(
+        rgba(20,184,166,0.08),
+        transparent 70%
+    );
+
+    top:-120px;
+    right:-80px;
+
+    border-radius:50%;
+}
+
+/* HOVER */
+
+.semester-card:hover{
+
+    transform:
+    translateY(-10px);
+
+    border-color:#dbeafe;
+
+    box-shadow:
+    0 25px 55px rgba(37,99,235,0.14);
+}
+
+/* ACTIVE */
+
+.active-sem{
+    background:
+    linear-gradient(
+        180deg,
+        #ffffff,
+        #f8fffe
+    );
+}
+
+/* LOCKED */
+
+.locked-sem{
+    opacity:0.92;
+}
+
+/* =========================
+   TOP
+========================= */
+
+.semester-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:30px;
+}
+
+.semester-number{
+
+    width:68px;
+    height:68px;
+
+    border-radius:20px;
+
+    background:#f8fafc;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:30px;
+    font-weight:900;
+
+    color:#0f172a;
+
+    transition:0.35s;
+}
+
+.semester-card:hover .semester-number{
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    color:white;
+
+    transform:rotate(-4deg);
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.status-badge{
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-size:14px;
+    font-weight:700;
+}
+
+.active-badge{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.lock-badge{
+    background:#f1f5f9;
+    color:#64748b;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.semester-heading{
+    font-size:30px;
+    font-weight:800;
+    color:#0f172a;
+    margin-bottom:16px;
+}
+
+.semester-desc{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    margin-bottom:26px;
+}
+
+/* =========================
+   FOOTER AREA
+========================= */
+
+.semester-bottom{
+    margin-top:auto;
+}
+
+.semester-mini{
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+    margin-bottom:24px;
+}
+
+/* BUTTON */
+
+.semester-btn{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    padding:15px 26px;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 12px 24px rgba(15,23,42,0.16);
+}
+
+.semester-btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.02);
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    box-shadow:
+    0 18px 36px rgba(37,99,235,0.25);
+}
+
+.soon-text{
+    color:#94a3b8;
+    font-size:15px;
+    font-weight:600;
+}
+
+/* =========================
+   INFO SECTION
+========================= */
+
+.academic-info-section{
+    margin-top:70px;
+}
+
+.academic-info-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:30px;
+}
+
+/* LEFT CARD */
+
+.academic-info-card{
+
+    background:
+    linear-gradient(
+        135deg,
+        #172554,
+        #1e3a8a,
+        #0f766e
+    );
+
+    color:white;
+
+    padding:42px;
+
+    border-radius:30px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 20px 50px rgba(15,23,42,0.18);
+}
+
+.academic-info-card::before{
+    content:'';
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    background:
+    radial-gradient(
+        rgba(255,255,255,0.08),
+        transparent 70%
+    );
+
+    top:-120px;
+    right:-80px;
+
+    border-radius:50%;
+}
+
+.info-icon{
+
+    width:80px;
+    height:80px;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,0.12);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:36px;
+
+    margin-bottom:24px;
+}
+
+.academic-info-card h2{
+
+    font-size:40px;
+
+    margin-bottom:18px;
+
+    line-height:1.2;
+}
+
+.academic-info-card p{
+
+    line-height:1.9;
+
+    font-size:16px;
+
+    opacity:0.92;
+}
+
+/* TAGS */
+
+.info-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+
+    margin-top:28px;
+}
+
+.info-tags span{
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,0.12);
+
+    border:1px solid rgba(255,255,255,0.10);
+
+    font-size:14px;
+    font-weight:700;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.mini-stats-wrap{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+.mini-stat-card{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    border:1px solid #e2e8f0;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 10px 24px rgba(15,23,42,0.04);
+}
+
+.mini-stat-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 20px 40px rgba(15,23,42,0.08);
+}
+
+.mini-stat-card h3{
+
+    font-size:36px;
+
+    color:#14b8a6;
+
+    margin-bottom:12px;
+}
+
+.mini-stat-card p{
+
+    color:#64748b;
+
+    font-weight:600;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .semester-page{
+        width:94%;
+        padding-top:35px;
+    }
+
+    .semester-title{
+        font-size:40px;
+    }
+
+    .semester-subtitle{
+        font-size:16px;
+    }
+
+    .semester-grid{
+        grid-template-columns:1fr;
+    }
+
+    .academic-info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .academic-info-card{
+        padding:32px;
+    }
+
+    .academic-info-card h2{
+        font-size:30px;
+    }
+
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.semester-footer{
+
+    margin-top:100px;
+
+    background:white;
+
+    border-top:1px solid #e2e8f0;
+}
+
+.footer-grid{
+
+    width:90%;
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:70px 0;
+
+    display:grid;
+
+    grid-template-columns:
+    2fr 1fr 1fr;
+
+    gap:60px;
+}
+
+/* BRAND */
+
+.footer-brand{
+    display:flex;
+    gap:24px;
+}
+
+.footer-logo{
+
+    width:72px;
+    height:72px;
+
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    color:white;
+
+    box-shadow:
+    0 14px 35px rgba(37,99,235,0.18);
+}
+
+.footer-brand h2{
+
+    font-size:42px;
+
+    font-weight:900;
+
+    margin-bottom:16px;
+
+    color:#0f172a;
+}
+
+.footer-brand p{
+
+    max-width:520px;
+
+    color:#64748b;
+
+    line-height:1.9;
+
+    font-size:18px;
+}
+
+/* LINKS */
+
+.footer-links,
+.footer-support{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.footer-links h3,
+.footer-support h3{
+
+    font-size:28px;
+
+    margin-bottom:14px;
+
+    color:#0f172a;
+}
+
+.footer-links a{
+
+    color:#64748b;
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    transition:0.3s ease;
+}
+
+.footer-links a:hover{
+
+    color:#14b8a6;
+
+    transform:translateX(6px);
+}
+
+.footer-support p{
+
+    color:#64748b;
+
+    font-size:17px;
+
+    font-weight:600;
+}
+
+/* BOTTOM */
+
+.footer-bottom{
+
+    border-top:1px solid #e2e8f0;
+
+    width:90%;
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:26px 0;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+}
+
+.footer-bottom p,
+.footer-bottom span{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-brand{
+        flex-direction:column;
+    }
+
+    .footer-brand h2{
+        font-size:34px;
+    }
+
+}
+
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-wrapper{
+
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+
+    margin-bottom:45px;
+}
+
+.search-box{
+
+    width:100%;
+    max-width:700px;
+
+    position:relative;
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:
+    22px 28px 22px 65px;
+
+    border-radius:24px;
+
+    border:1px solid #dbeafe;
+
+    background:
+    rgba(255,255,255,0.85);
+
+    backdrop-filter:blur(12px);
+
+    font-size:17px;
+
+    color:#0f172a;
+
+    outline:none;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,0.05);
+}
+
+/* PLACEHOLDER */
+
+.search-box input::placeholder{
+    color:#94a3b8;
+}
+
+/* HOVER */
+
+.search-box input:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 20px 45px rgba(37,99,235,0.08);
+}
+
+/* FOCUS */
+
+.search-box input:focus{
+
+    border-color:#14b8a6;
+
+    box-shadow:
+    0 0 0 5px rgba(20,184,166,0.10),
+    0 20px 50px rgba(37,99,235,0.12);
+}
+
+/* ICON */
+
+.search-icon{
+
+    position:absolute;
+
+    top:50%;
+    left:24px;
+
+    transform:translateY(-50%);
+
+    font-size:22px;
+
+    color:#14b8a6;
+}
+</style>
+
+{% endblock %}

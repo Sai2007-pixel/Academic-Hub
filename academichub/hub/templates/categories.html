@@ -1,0 +1,840 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+body{
+    background:#f8fafc;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+}
+
+/* BACKGROUND GLOW */
+
+body::before{
+    content:'';
+
+    position:fixed;
+
+    top:-200px;
+    left:-200px;
+
+    width:500px;
+    height:500px;
+
+    background:
+    radial-gradient(
+        rgba(20,184,166,0.05),
+        transparent 70%
+    );
+
+    z-index:-1;
+}
+
+body::after{
+    content:'';
+
+    position:fixed;
+
+    bottom:-250px;
+    right:-250px;
+
+    width:550px;
+    height:550px;
+
+    background:
+    radial-gradient(
+        rgba(37,99,235,0.05),
+        transparent 70%
+    );
+
+    z-index:-1;
+}
+
+/* =========================================
+   SUBJECT HEADER
+========================================= */
+
+.subject-header{
+    width:90%;
+    max-width:1450px;
+    margin:55px auto 35px;
+}
+
+/* BREADCRUMB */
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+}
+
+.breadcrumb a{
+    text-decoration:none;
+    color:#64748b;
+    font-size:16px;
+    font-weight:700;
+    transition:0.35s ease;
+    position:relative;
+}
+
+.breadcrumb a:hover{
+    color:#14b8a6;
+}
+
+.breadcrumb a::after{
+    content:'';
+
+    position:absolute;
+
+    left:0;
+    bottom:-5px;
+
+    width:0%;
+    height:3px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    transition:0.35s ease;
+}
+
+.breadcrumb a:hover::after{
+    width:100%;
+}
+
+.breadcrumb span{
+    color:#94a3b8;
+    font-weight:700;
+}
+
+/* TITLE */
+
+.subject-title{
+    font-size:64px;
+    font-weight:900;
+    line-height:1.05;
+    color:#0f172a;
+    margin-bottom:22px;
+    letter-spacing:-2px;
+}
+
+/* SUBTITLE */
+
+.subject-subtitle{
+    max-width:950px;
+    font-size:19px;
+    line-height:1.9;
+    color:#64748b;
+}
+
+/* =========================================
+   CATEGORY SECTION
+========================================= */
+
+.categories-section{
+    width:90%;
+    max-width:1450px;
+    margin:50px auto 80px;
+}
+
+/* GRID */
+
+.categories-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:32px;
+}
+
+/* =========================================
+   PREMIUM CARD
+========================================= */
+
+.category-card{
+
+    position:relative;
+
+    background:
+    rgba(255,255,255,0.82);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:32px;
+
+    padding:34px;
+
+    border:
+    1px solid rgba(255,255,255,0.45);
+
+    overflow:hidden;
+
+    transition:0.45s ease;
+
+    min-height:340px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    box-shadow:
+    0 10px 35px rgba(15,23,42,0.06);
+
+    isolation:isolate;
+}
+
+/* TOP LINE */
+
+.category-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #14b8a6,
+        #2563eb
+    );
+}
+
+/* GLOW EFFECT */
+
+.category-card::after{
+
+    content:'';
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(20,184,166,0.10),
+        transparent 70%
+    );
+
+    top:-80px;
+    right:-80px;
+
+    transition:0.45s ease;
+}
+
+/* HOVER */
+
+.category-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.02);
+
+    box-shadow:
+    0 30px 65px rgba(37,99,235,0.14);
+
+    border-color:
+    rgba(20,184,166,0.28);
+}
+
+.category-card:hover::after{
+    transform:scale(1.08);
+}
+
+/* SHINE EFFECT */
+
+.shine{
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:70%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.55),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:0.9s;
+}
+
+.category-card:hover .shine{
+    left:130%;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.category-icon{
+
+    width:78px;
+    height:78px;
+
+    border-radius:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f8fafc,
+        #ffffff
+    );
+
+    margin-bottom:26px;
+
+    transition:0.45s ease;
+
+    box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.8),
+    0 10px 25px rgba(15,23,42,0.06);
+}
+
+.category-card:hover .category-icon{
+
+    transform:
+    scale(1.12)
+    rotate(-8deg);
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    color:white;
+
+    box-shadow:
+    0 20px 40px rgba(37,99,235,0.22);
+}
+
+/* =========================================
+   FILE BADGE
+========================================= */
+
+.file-badge{
+
+    position:absolute;
+
+    top:28px;
+    right:28px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    color:white;
+
+    padding:9px 18px;
+
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:800;
+
+    box-shadow:
+    0 10px 25px rgba(20,184,166,0.25);
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.category-card h2{
+
+    font-size:38px;
+    font-weight:900;
+    line-height:1.2;
+
+    color:#0f172a;
+
+    margin-bottom:18px;
+}
+
+/* DESCRIPTION */
+
+.category-card p{
+
+    color:#64748b;
+
+    line-height:1.9;
+
+    font-size:16px;
+
+    margin-bottom:30px;
+
+    flex-grow:1;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.browse-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    width:240px;
+
+    padding:16px 24px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:15px;
+    font-weight:800;
+
+    transition:0.4s ease;
+
+    box-shadow:
+    0 15px 30px rgba(15,23,42,0.18);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.browse-btn::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.35),
+        transparent
+    );
+
+    transition:0.7s;
+}
+
+.browse-btn:hover::before{
+    left:120%;
+}
+
+.browse-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.04);
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    box-shadow:
+    0 25px 45px rgba(37,99,235,0.26);
+}
+
+/* =========================================
+   RESOURCE BANNER
+========================================= */
+
+.resource-banner{
+
+    width:90%;
+    max-width:1450px;
+
+    margin:90px auto;
+
+    padding:70px;
+
+    border-radius:40px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1e3a8a,
+        #0f766e
+    );
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 35px 70px rgba(15,23,42,0.16);
+
+    animation:floating 6s ease-in-out infinite;
+}
+
+.resource-banner::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    top:-140px;
+    right:-80px;
+}
+
+.resource-badge{
+
+    display:inline-block;
+
+    padding:12px 22px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(10px);
+
+    font-weight:700;
+
+    margin-bottom:28px;
+}
+
+.resource-banner h2{
+
+    font-size:62px;
+
+    line-height:1.1;
+
+    margin-bottom:24px;
+
+    max-width:950px;
+
+    font-weight:900;
+
+    letter-spacing:-2px;
+}
+
+.resource-banner p{
+
+    max-width:850px;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+    color:
+    rgba(255,255,255,0.88);
+
+    margin-bottom:34px;
+}
+
+.resource-tags{
+
+    display:flex;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+}
+
+.resource-tags span{
+
+    padding:14px 24px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,0.10);
+
+    border:
+    1px solid rgba(255,255,255,0.15);
+
+    font-weight:700;
+
+    transition:0.3s ease;
+}
+
+.resource-tags span:hover{
+
+    background:white;
+
+    color:#0f172a;
+
+    transform:translateY(-3px);
+}
+
+/* =========================================
+   FLOATING EFFECT
+========================================= */
+
+@keyframes floating{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:900px){
+
+    .subject-title{
+        font-size:42px;
+    }
+
+    .subject-subtitle{
+        font-size:16px;
+    }
+
+    .resource-banner{
+        padding:40px;
+    }
+
+    .resource-banner h2{
+        font-size:36px;
+    }
+
+    .categories-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+<!-- HEADER -->
+
+<section class="subject-header">
+
+    <div class="breadcrumb">
+
+        <a href="/">🏠 Home</a>
+
+        <span>›</span>
+
+        <a href="/#courses">Courses</a>
+
+        <span>›</span>
+
+        <a href="javascript:history.back()">
+            {{ subject.name }}
+        </a>
+
+    </div>
+
+    <h1 class="subject-title">
+        {{ subject.name }} Learning Resources
+    </h1>
+
+    <p class="subject-subtitle">
+
+        Access categorized academic materials including lecture notes,
+        assignments, laboratory manuals, presentations, PDFs and
+        structured educational resources designed for effective learning.
+
+    </p>
+
+</section>
+
+<!-- CATEGORY GRID -->
+
+<section class="categories-section">
+
+    <div class="categories-grid">
+
+        {% for item in category_data %}
+
+        <div class="category-card">
+
+            <div class="shine"></div>
+
+            <!-- ICON -->
+
+            <div class="category-icon">
+
+                {% if item.category.name == "Assignments" %}
+                📝
+
+                {% elif item.category.name == "PPTs" %}
+                📊
+
+                {% elif item.category.name == "Notes" %}
+                📘
+
+                {% elif item.category.name == "Lab Manuals" %}
+                🧪
+
+                {% elif item.category.name == "Syllabus" %}
+                📂
+
+                {% else %}
+                📁
+                {% endif %}
+
+            </div>
+
+            <!-- FILE COUNT -->
+
+            <div class="file-badge">
+
+                {{ item.file_count }} Files
+
+            </div>
+
+            <!-- TITLE -->
+
+            <h2>{{ item.category.name }}</h2>
+
+            <!-- DESCRIPTION -->
+
+            <p>
+
+                {% if item.category.name == "Assignments" %}
+                Access structured assignment questions, academic tasks
+                and professional practice resources for student learning.
+
+                {% elif item.category.name == "PPTs" %}
+                Browse visual presentations, classroom slides and
+                structured academic learning materials.
+
+                {% elif item.category.name == "Notes" %}
+                Study lecture notes, concept explanations and
+                semester-wise educational references.
+
+                {% elif item.category.name == "Lab Manuals" %}
+                Access laboratory experiments, practical records
+                and implementation-based manuals.
+
+                {% elif item.category.name == "Syllabus" %}
+                Explore detailed semester syllabus, course structure
+                and academic curriculum resources.
+
+                {% else %}
+                Browse organized educational resources and
+                structured academic materials.
+                {% endif %}
+
+            </p>
+
+            <!-- BUTTON -->
+
+            <a href="/files/{{ subject.id }}/{{ item.category.id }}/"
+               class="browse-btn">
+
+               Browse Resources →
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- RESOURCE BANNER -->
+
+<section class="resource-banner">
+
+    <div class="resource-badge">
+        📘 Structured Academic Resource Platform
+    </div>
+
+    <h2>
+        Empowering Smarter Academic Learning
+    </h2>
+
+    <p>
+
+        Academic Hub simplifies educational access through categorized
+        study resources, helping students efficiently organize semester
+        materials, presentations, notes, assignments and practical records.
+
+    </p>
+
+    <div class="resource-tags">
+
+        <span>Organized Learning</span>
+        <span>Student Focused</span>
+        <span>Semester Resources</span>
+        <span>Academic Excellence</span>
+
+    </div>
+
+</section>
+
+{% endblock %}

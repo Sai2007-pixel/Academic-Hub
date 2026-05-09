@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+
+<section class="hero hero-full">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            📚 Centralized Academic Resource Platform
+        </div>
+
+        <h1 class="hero-title">
+            Elevate Your <span>Academic Learning</span> Experience
+        </h1>
+
+        <p class="hero-subtitle">
+            Academic Hub brings together semester-wise study materials,
+            lecture notes, assignments, lab manuals, PPTs and reference
+            PDFs in one organized platform designed for students.
+        </p>
+
+        <a href="#courses" class="hero-btn">
+            Start Exploring →
+        </a>
+
+
+
+        <!-- STATS -->
+
+        <div class="hero-stats">
+
+            <div class="stat-box">
+                <h2>{{ total_courses }}+</h2>
+                <p>Academic Programs</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>{{ total_semesters }}</h2>
+                <p>Semester Collections</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>{{ total_resources }}+</h2>
+                <p>Learning Resources</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COURSES SECTION -->
+
+<section id="courses" class="course-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+            Explore Programs
+        </span>
+
+        <h2>Academic Departments</h2>
+
+        <p>
+            Explore specialized Computer Science branches with
+            structured semester-wise academic resources and subject materials.
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        {% for branch in branches %}
+
+        <div class="card branch-card">
+
+            <div class="course-top"></div>
+
+            <div class="course-icon">
+                🎓
+            </div>
+
+            <h3>{{ branch.name }}</h3>
+
+            <p class="course-desc">
+                Access curated subject materials including notes,
+                assignments, presentations, lab manuals and important PDFs.
+            </p>
+
+            <a href="/semesters/{{ branch.id }}/" class="btn">
+                Open Semester Portal →
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <div class="card">
+            <h3>No Academic Programs Available</h3>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES SECTION -->
+
+<section class="features-section">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+            Platform Features
+        </span>
+
+        <h2>Built for Modern Academic Learning</h2>
+
+        <p>
+            Academic Hub simplifies the way students access,
+            manage and utilize educational resources throughout their journey.
+        </p>
+
+    </div>
+
+    <div class="features-grid">
+
+        <!-- CARD 1 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📂
+            </div>
+
+            <h3>Structured Subject Library</h3>
+
+            <p>
+                Resources are organized branch-wise,
+                semester-wise and subject-wise for faster learning access.
+            </p>
+
+        </div>
+
+        <!-- CARD 2 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ⬇
+            </div>
+
+            <h3>Instant Material Downloads</h3>
+
+            <p>
+                Download lecture notes, assignments,
+                presentations and lab files directly without complexity.
+            </p>
+
+        </div>
+
+        <!-- CARD 3 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🔎
+            </div>
+
+            <h3>Smart Navigation System</h3>
+
+            <p>
+                Quickly locate study resources using
+                organized academic categories and semester flow.
+            </p>
+
+        </div>
+
+        <!-- CARD 4 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🛡
+            </div>
+
+            <h3>Admin Controlled Platform</h3>
+
+            <p>
+                Only authorized administrators can manage,
+                update and maintain academic content securely.
+            </p>
+
+        </div>
+
+        <!-- CARD 5 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <h3>Continuously Updated Resources</h3>
+
+            <p>
+                New academic materials and semester content
+                are updated regularly to support ongoing learning.
+            </p>
+
+        </div>
+
+        <!-- CARD 6 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📘
+            </div>
+
+            <h3>Comprehensive Study Support</h3>
+
+            <p>
+                From syllabus documents to practical lab manuals,
+                every essential academic resource is available in one place.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

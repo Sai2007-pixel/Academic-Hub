@@ -1,0 +1,743 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   SUBJECT PAGE
+========================= */
+
+.subject-page{
+    width:92%;
+    max-width:1450px;
+    margin:auto;
+    padding:30px 0 80px;
+}
+
+/* =========================
+   BREADCRUMB
+========================= */
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+    font-size:15px;
+    font-weight:700;
+    flex-wrap:wrap;
+}
+
+.bread-link{
+    text-decoration:none;
+    color:#64748b;
+    transition:0.3s;
+}
+
+.bread-link:hover{
+    color:#14b8a6;
+}
+
+.bread-active{
+    color:#0f172a;
+}
+
+.breadcrumb span{
+    color:#94a3b8;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.subject-header{
+    margin-bottom:35px;
+}
+
+.subject-title{
+    font-size:54px;
+    font-weight:900;
+    letter-spacing:-2px;
+    color:#0f172a;
+    margin-bottom:18px;
+    line-height:1.1;
+}
+
+.subject-subtitle{
+    font-size:18px;
+    color:#64748b;
+    max-width:850px;
+    line-height:1.9;
+    font-weight:500;
+}
+
+/* =========================
+   SUBJECT GRID
+========================= */
+
+.subject-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:26px;
+
+    margin-top:40px;
+}
+
+/* =========================
+   SUBJECT CARD
+========================= */
+
+.subject-card{
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:26px;
+
+    border:1px solid #e2e8f0;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:0.4s ease;
+
+    min-height:300px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    box-shadow:
+    0 8px 24px rgba(15,23,42,0.05);
+}
+
+/* TOP BORDER */
+
+.subject-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #14b8a6,
+        #2563eb
+    );
+}
+
+/* GLOW EFFECT */
+
+.subject-card::after{
+
+    content:'';
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(20,184,166,0.10),
+        transparent 70%
+    );
+
+    top:-80px;
+    right:-80px;
+
+    transition:0.4s;
+}
+
+/* HOVER */
+
+.subject-card:hover{
+
+    transform:translateY(-10px);
+
+    border-color:#14b8a6;
+
+    box-shadow:
+    0 22px 45px rgba(37,99,235,0.14);
+}
+
+.subject-card:hover::after{
+    transform:scale(1.12);
+}
+
+/* TOP AREA */
+
+.subject-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:22px;
+}
+
+/* ICON */
+
+.subject-icon{
+
+    width:72px;
+    height:72px;
+
+    border-radius:22px;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:34px;
+
+    transition:0.35s;
+}
+
+.subject-card:hover .subject-icon{
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #2563eb
+    );
+
+    transform:
+    scale(1.08)
+    rotate(-5deg);
+}
+
+/* BADGE */
+
+.credit-badge{
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    box-shadow:
+    0 8px 20px rgba(20,184,166,0.18);
+}
+
+/* BODY */
+
+.subject-body{
+
+    flex-grow:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+/* MODULE BADGE */
+
+.subject-code{
+
+    display:inline-block;
+
+    width:fit-content;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    box-shadow:
+    0 10px 20px rgba(20,184,166,0.16);
+}
+
+/* SUBJECT NAME */
+
+.subject-name{
+
+    font-size:30px;
+
+    font-weight:900;
+
+    color:#0f172a;
+
+    margin-bottom:16px;
+
+    line-height:1.2;
+}
+
+/* DESCRIPTION */
+
+.subject-desc{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+    font-size:14px;
+
+    margin-bottom:28px;
+
+    flex-grow:1;
+}
+
+/* BUTTON */
+
+.subject-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    width:fit-content;
+
+    padding:14px 22px;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    transition:0.35s;
+
+    box-shadow:
+    0 10px 22px rgba(15,23,42,0.14);
+}
+
+.subject-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:
+    linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    box-shadow:
+    0 16px 30px rgba(20,184,166,0.24);
+}
+
+/* LEARNING SECTION */
+
+.learning-banner{
+
+    margin-top:55px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #172554,
+        #1e3a8a,
+        #0f766e
+    );
+
+    border-radius:38px;
+
+    padding:65px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    color:white;
+}
+
+.learning-banner::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    background:
+    radial-gradient(
+        rgba(255,255,255,0.10),
+        transparent 70%
+    );
+
+    right:-140px;
+    top:-120px;
+
+    border-radius:50%;
+}
+
+.learning-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 24px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,0.12);
+
+    border:1px solid rgba(255,255,255,0.10);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    margin-bottom:28px;
+}
+
+.learning-title{
+
+    font-size:54px;
+
+    font-weight:900;
+
+    line-height:1.2;
+
+    margin-bottom:26px;
+
+    max-width:900px;
+}
+
+.learning-desc{
+
+    font-size:18px;
+
+    line-height:1.9;
+
+    max-width:860px;
+
+    opacity:0.92;
+}
+
+.learning-tags{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:16px;
+
+    margin-top:40px;
+}
+
+.learning-tags span{
+
+    padding:14px 20px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,0.12);
+
+    border:1px solid rgba(255,255,255,0.10);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:0.3s;
+}
+
+.learning-tags span:hover{
+
+    transform:translateY(-3px);
+
+    background:rgba(255,255,255,0.18);
+}
+
+/* EMPTY STATE */
+
+.empty-box{
+
+    background:white;
+
+    border-radius:32px;
+
+    padding:80px 40px;
+
+    text-align:center;
+
+    border:1px solid #e2e8f0;
+}
+
+.empty-box h2{
+
+    font-size:42px;
+
+    color:#0f172a;
+
+    margin-bottom:18px;
+}
+
+.empty-box p{
+
+    color:#64748b;
+
+    line-height:1.9;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .subject-page{
+        width:94%;
+    }
+
+    .subject-title{
+        font-size:42px;
+    }
+
+    .subject-subtitle{
+        font-size:16px;
+    }
+
+    .learning-title{
+        font-size:38px;
+    }
+
+    .learning-banner{
+        padding:40px;
+    }
+
+    .subject-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+.subject-footer{
+
+    margin-top:90px;
+
+    text-align:center;
+
+    padding:50px 20px;
+
+    border-top:1px solid rgba(0,0,0,0.08);
+}
+
+
+</style>
+
+<div class="subject-page">
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+        <a href="/" class="bread-link">
+            🏠 Home
+        </a>
+
+        <span>›</span>
+
+        <a href="/" class="bread-link">
+            Courses
+        </a>
+
+        <span>›</span>
+
+        <a href="/semesters/{{ branch.id }}/" class="bread-link">
+            {{ branch.name }}
+        </a>
+
+        <span>›</span>
+
+        <span class="bread-active">
+            Semester {{ semester.name }}
+        </span>
+
+    </div>
+
+    <!-- HEADER -->
+
+    <div class="subject-header">
+
+        <h1 class="subject-title">
+            Academic Subjects Portal
+        </h1>
+
+        <p class="subject-subtitle">
+
+            Explore structured semester-wise academic subjects with
+            centralized educational resources including lecture notes,
+            assignments, presentations, laboratory manuals and curated
+            study materials designed for efficient student learning.
+
+        </p>
+
+    </div>
+
+    <!-- SUBJECT GRID -->
+
+    <div class="subject-grid">
+
+        {% for subject in subjects %}
+
+        <div class="subject-card">
+
+            <div class="subject-top">
+
+                <div class="subject-icon">
+                    📘
+                </div>
+
+                <div class="credit-badge">
+                    Academic Subject
+                </div>
+
+            </div>
+
+            <div class="subject-body">
+
+                <div class="subject-code">
+                    Academic Learning Module
+                </div>
+
+                <h2 class="subject-name">
+                    {{ subject.name }}
+                </h2>
+
+                <p class="subject-desc">
+
+                    Access comprehensive academic materials including
+                    lecture notes, assignments, PDFs, laboratory content,
+                    presentations and structured educational resources
+                    tailored for semester learning.
+
+                </p>
+
+            </div>
+
+            <a href="/categories/{{ subject.id }}/"
+               class="subject-btn">
+
+               View Materials →
+
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-box">
+
+            <h2>
+                No Subjects Available
+            </h2>
+
+            <p>
+                Academic subjects for this semester
+                will be updated soon by administrators.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- LEARNING SECTION -->
+
+    <section class="learning-banner">
+
+        <div class="learning-badge">
+            🎓 Structured Academic Learning Platform
+        </div>
+
+        <h2 class="learning-title">
+            Transforming Academic Learning Through Structured Education
+        </h2>
+
+        <p class="learning-desc">
+
+            Academic Hub simplifies educational access by organizing
+            semester resources into a structured academic ecosystem
+            where students can efficiently access notes, practical
+            manuals, assignments, presentations and study references.
+
+        </p>
+
+        <div class="learning-tags">
+
+            <span>Semester Resources</span>
+            <span>Student Friendly Access</span>
+            <span>Centralized Learning</span>
+            <span>Educational Excellence</span>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+{% endblock %}
