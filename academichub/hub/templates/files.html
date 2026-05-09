@@ -642,23 +642,14 @@
 
             <div class="file-actions">
 
-                <!-- VIEW PDF -->
-
-                <a href="{% url 'view_file' file.id %}"
-                    class="view-btn">
-
-                     👁 View PDF
-
-                </a>
-
+            
                 <!-- DOWNLOAD PDF -->
 
                 <a href="{{ file.file.url }}"
-                   download
-                   class="download-btn">
+                     target="_blank"
+                     class="download-btn">
 
-                   ⬇ Download
-
+                     ⬇ Download PDF
                 </a>
             </div>
 
