@@ -53,11 +53,11 @@
         <div class="pdf-buttons">
 
             <!-- VIEW -->
-            <a href="https://docs.google.com/viewer?url={{ file.file.url }}&embedded=true"
-               target="_blank"
-               class="view-btn">
+            <a href="https://docs.google.com/viewer?url=https://{{ file.file.url|cut:'https://' }}&embedded=true"
+                target="_blank"
+                class="view-btn">
 
-               👁 View PDF
+                👁 View PDF
             </a>
 
             <!-- DOWNLOAD -->
@@ -76,7 +76,7 @@
     <div class="pdf-viewer">
 
         <iframe
-            src="https://docs.google.com/viewer?url={{ file.file.url }}&embedded=true"
+            src="https://docs.google.com/viewer?url=https://{{ file.file.url|cut:'https://' }}&embedded=true"
             width="100%"
             height="900px"
             style="border:none; border-radius:20px;">
